@@ -5,9 +5,16 @@ var posts = require('./mock/posts.json');
 
 var app = express();
 
+//Sets view engine to jade.
+app.set('view engine', 'jade');
+
+// Sets express to look for views in the /templates directory.
+app.set('views', __dirname + '/templates');
+
 //Creates a server request.
 app.get('/', function (req, res) {
-  res.send("<h1>Im creating my first express app!</h1>");
+  //Tells express to render index file in the given app.set's above (/templates).
+  res.render('index');
 });
 
 app.get('/blog/:title?', function (req, res) {
@@ -17,7 +24,8 @@ app.get('/blog/:title?', function (req, res) {
     res.send("Sorry, This page is under construction.");
   } else {
       var post = posts[title];
-      res.send(post);
+      // Renders post where post is called on the post.jade template.
+      res.render('post', { post: post });
     }
 });
 
