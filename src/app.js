@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var express = require('express');
@@ -20,10 +21,10 @@ app.get('/', function (req, res) {
 app.get('/blog/:title?', function (req, res) {
   var title = req.params.title;
   if (title === undefined) {
-    res.status(503)
+    res.status(503);
     res.send("Sorry, This page is under construction.");
   } else {
-      var post = posts[title];
+      var post = posts[title] || {};
       // Renders post where post is called on the post.jade template.
       res.render('post', { post: post });
     }
@@ -31,5 +32,5 @@ app.get('/blog/:title?', function (req, res) {
 
 //tells server request to listen on '3000'.
 app.listen(7000, function () {
-  console.log('*** The frontend server is running on port (7000) ***');
+  console.log('*** The frontend server is running on http://localhost:7000 ***');
 });
